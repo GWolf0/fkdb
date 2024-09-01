@@ -34,6 +34,7 @@ export default class FKDBLangService{
                 // console.info(FKDBLangService.queryResult);
             }
         }finally{
+            console.log('Query result:',FKDBLangService.queryResult);
             return FKDBLangService.queryResult;
         }
     }
@@ -170,13 +171,14 @@ export default class FKDBLangService{
         let op=FKDBLangService.operator();
         let val=FKDBLangService.term();
         whereItems.push({key,op,val});
+        FKDBLangService.queryResult.options["whereItems"]=whereItems;
         while(FKDBLangService.matchOperator(",",true)){
             key=FKDBLangService.term();
             op=FKDBLangService.operator();
             val=FKDBLangService.term();
             whereItems.push({key,op,val});
+            FKDBLangService.queryResult.options["whereItems"].push({key,op,val});
         }
-        FKDBLangService.queryResult.options["whereItems"]=whereItems;
     }
     static offset():boolean{
         if(FKDBLangService.matchTerm("offset",true)){
